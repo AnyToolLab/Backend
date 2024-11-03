@@ -5,10 +5,10 @@ name = "pypi"
 
 [packages]
 django = "*"
-pillow = "*"
 segno = "*"
 qrcode-artistic = "*"
 django-cors-headers = "*"
+pillow = "*"
 
 [dev-packages]
 

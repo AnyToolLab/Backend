@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders',
 
-    'src.apps.qrcode.apps.QrcodeConfig'
+    'src.apps.qrcode.apps.QrcodeConfig',
+    'src.apps.image_converter.apps.ImageConverterConfig',
 ]
 
 MIDDLEWARE = [

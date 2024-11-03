@@ -1,4 +1,4 @@
-import uuid
+from uuid import uuid4
 import os
 
 from django.http import JsonResponse
@@ -9,7 +9,6 @@ from django.core.files import File as DjangoFile
 import segno
 
 from config import settings
-from config.settings import MEDIA_URL, MEDIA_ROOT
 
 from . import forms
 from .models import File
@@ -26,7 +25,7 @@ class QRCodeGenerateView(FormView):
         save_format = form.cleaned_data.get('save_format')
 
         qrcode = segno.make(content, error='m', version=15)
-        qrcode_name = f'qrcode_{uuid.uuid4()}{save_format}'
+        qrcode_name = f'qrcode_{uuid4().hex[:8]}{save_format}'
         file_path = os.path.join(settings.MEDIA_ROOT, 'qrcode', qrcode_name)
 
         qrcode.to_artistic(
@@ -47,7 +46,7 @@ class QRCodeGenerateView(FormView):
         return JsonResponse(
             {
                 'status': 'success',
-                'message': 'QRCode successfully generated',
+                'message': 'QRCode successfully generated!',
                 'data': {
                 'url': file_instance.file.url
                 }
