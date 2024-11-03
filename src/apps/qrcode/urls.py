@@ -5,5 +5,5 @@ from . import views
 app_name = 'qrcode'
 
 urlpatterns = [
-    path('generate/', views.QRCodeGIFGenerateView.as_view(), name='generate_qr_with_gif'),
+    path('generate/', views.QRCodeGenerateView.as_view(), name='generate_qr_code'),
 ]
