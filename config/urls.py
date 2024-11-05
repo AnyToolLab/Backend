@@ -22,7 +22,8 @@ from config import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('qrcode/', include('src.apps.qrcode.urls', namespace='qrcode'))
+    path('qrcode/', include('src.apps.qrcode.urls', namespace='qrcode')),
+    path('image-converter/', include('src.apps.image_converter.urls', namespace='image_converter'))
 ] 
 
 if settings.DEBUG:
