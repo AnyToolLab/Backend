@@ -9,6 +9,7 @@ segno = "*"
 qrcode-artistic = "*"
 django-cors-headers = "*"
 pillow = "*"
+faker = "*"
 
 [dev-packages]
 

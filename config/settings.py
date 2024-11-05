@@ -42,6 +42,8 @@ INSTALLED_APPS = [
 
     'src.apps.qrcode.apps.QrcodeConfig',
     'src.apps.image_converter.apps.ImageConverterConfig',
+    'src.apps.fake_data.apps.FakeDataConfig',
+
 ]
 
 MIDDLEWARE = [

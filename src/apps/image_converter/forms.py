@@ -4,6 +4,7 @@ from django import forms
 
 IMAGES_TYPES = ('png', 'jpg', 'jpeg', 'webp', 'svg')
 
+
 class MultipleFileInput(forms.ClearableFileInput):
     allow_multiple_selected = True
 
@@ -58,6 +59,3 @@ class ImageConverterForm(forms.Form):
     def clean_convert_to_formats(self):
         convert_to_formats = self.cleaned_data.get('convert_to_formats')
         return [i if i.lower() in IMAGES_TYPES else False for i in convert_to_formats]
-
-
-
