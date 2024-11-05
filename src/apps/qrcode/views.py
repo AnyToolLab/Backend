@@ -1,12 +1,13 @@
 from uuid import uuid4
 import os
 
+import segno
+
 from django.http import JsonResponse
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
-from django.views.generic import FormView
 from django.core.files import File as DjangoFile
-import segno
+from django.views.generic import FormView
 
 from config import settings
 
@@ -17,6 +18,15 @@ from .models import File
 @method_decorator(csrf_exempt, name='dispatch')
 class QRCodeGenerateView(FormView):
     form_class = forms.QRCodeGenerateForm
+
+    def get(self, request, *args, **kwargs):
+        return JsonResponse(
+            {
+                'status': 'error',
+                'message': 'Invalid request method',
+                'data': {}
+            }
+        )
 
     def form_valid(self, form):
         content = form.cleaned_data.get('content')

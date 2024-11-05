@@ -13,9 +13,19 @@ from django.core.files.base import ContentFile
 from . import forms
 from .models import File
 
+
 @method_decorator(csrf_exempt, name='dispatch')
 class ImageConverterView(FormView):
     form_class = forms.ImageConverterForm
+
+    def get(self, request, *args, **kwargs):
+        return JsonResponse(
+            {
+                'status': 'error',
+                'message': 'Invalid request method',
+                'data': {}
+            }
+        )
 
     def form_valid(self, form):
         images = form.cleaned_data.get('images')
