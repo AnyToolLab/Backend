@@ -35,7 +35,7 @@ class QRCodeGenerateView(FormView):
         save_format = form.cleaned_data.get('save_format')
 
         qrcode = segno.make(content, error='m', version=15)
-        qrcode_name = f'qrcode_{uuid4().hex[:8]}{save_format}'
+        qrcode_name = f'{uuid4()}{save_format}'
         file_path = os.path.join(settings.MEDIA_ROOT, 'qrcode', qrcode_name)
 
         qrcode.to_artistic(
@@ -58,7 +58,8 @@ class QRCodeGenerateView(FormView):
                 'status': 'success',
                 'message': 'QRCode successfully generated!',
                 'data': {
-                'url': file_instance.file.url
+                    'url': file_instance.file.url,
+                    'filename': f'qrcode{save_format}'
                 }
             }
         )
