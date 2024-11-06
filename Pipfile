@@ -10,6 +10,7 @@ qrcode-artistic = "*"
 django-cors-headers = "*"
 pillow = "*"
 faker = "*"
+dict2xml = "*"
 
 [dev-packages]
 
