@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'src.apps.qrcode.apps.QrcodeConfig',
     'src.apps.image_converter.apps.ImageConverterConfig',
     'src.apps.fake_data.apps.FakeDataConfig',
+    'src.apps.zip.apps.ZipConfig'
 
 ]
 
@@ -131,6 +132,8 @@ STATIC_URL = 'static/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'src/media/')
 MEDIA_URL = '/media/'
 
+ZIP_FILES_MEDIA_DIR = 'zip'
+
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # CORS_ALLOWED_ORIGINS = (
@@ -158,3 +161,5 @@ CORS_ALLOW_HEADERS = (
 )
 
 APPEND_SLASH=False
+
+DOMAIN_NAME = '127.0.0.1' # replace with real domain name on production

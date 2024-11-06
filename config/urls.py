@@ -22,6 +22,7 @@ from config import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('zip/', include('src.apps.zip.urls', namespace='zip')),
     path('qrcode/', include('src.apps.qrcode.urls', namespace='qrcode')),
     path('fake-data/', include('src.apps.fake_data.urls', namespace='fake_data')),
     path('image-converter/', include('src.apps.image_converter.urls', namespace='image_converter'))
