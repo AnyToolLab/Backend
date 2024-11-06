@@ -7,12 +7,15 @@ from dict2xml import dict2xml
 from django.http import JsonResponse
 from django.views.generic import FormView
 from django.core.files.base import ContentFile
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
 
 from src.apps.fake_data import forms
 from src.apps.fake_data.models import File
 from src.apps.fake_data.utils import FAKE_DATA
 
 
+@method_decorator(csrf_exempt, name='dispatch')
 class GenerateFakeDataView(FormView):
     form_class = forms.GenerateFakeDataForm
 
