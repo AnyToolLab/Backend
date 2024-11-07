@@ -1,3 +1,5 @@
+import zipfile
+
 from PIL import Image
 
 from django import forms
@@ -54,4 +56,16 @@ class ExtractZipForm(forms.Form):
         file = self.cleaned_data.get("file")
         if file.size > self.MAX_FILE_SIZE:
             raise forms.ValidationError(f"File size could not exceed {self.MAX_FILE_SIZE_MB}MB.")
+
+        try:
+            with zipfile.ZipFile(file) as zip_file:
+                zip_file.testzip()
+        except zipfile.BadZipFile:
+            raise forms.ValidationError("Uploaded file is not a valid ZIP archive.")
+        except RuntimeError as e:
+            if 'encrypted' in str(e).lower():
+                raise forms.ValidationError("Uploaded ZIP file is password-protected.")
+            else:
+                raise forms.ValidationError("There was an error processing the ZIP file.")
+
         return file
