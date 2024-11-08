@@ -54,7 +54,7 @@ class CreateZipView(FormView):
 
 
 @method_decorator(csrf_exempt, name='dispatch')
-class CreateZipView(FormView):
+class ExtractZipView(FormView):
     form_class = forms.ExtractZipForm
 
     def get(self, request, *args, **kwargs):
