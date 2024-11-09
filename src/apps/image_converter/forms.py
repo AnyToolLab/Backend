@@ -2,7 +2,7 @@ from PIL import Image
 
 from django import forms
 
-IMAGES_TYPES = ('png', 'jpg', 'jpeg', 'webp', 'svg')
+IMAGES_TYPES = ('png', 'jpeg', 'webp', 'gif', 'bmp', 'tiff', 'psd', 'ico')
 
 
 class MultipleFileInput(forms.ClearableFileInput):

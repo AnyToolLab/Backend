@@ -163,3 +163,5 @@ CORS_ALLOW_HEADERS = (
 APPEND_SLASH=False
 
 DOMAIN_NAME = '127.0.0.1' # replace with real domain name on production
+
+DOWNLOAD_URL = f'http://{DOMAIN_NAME}:8000'

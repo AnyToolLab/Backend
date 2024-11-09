@@ -1,3 +1,4 @@
+import time
 from io import BytesIO
 import os
 from uuid import uuid4
@@ -10,6 +11,7 @@ from django.views.generic import FormView
 from django.http import JsonResponse
 from django.core.files.base import ContentFile
 
+from config import settings
 from . import forms
 from .models import File
 
@@ -32,6 +34,7 @@ class ImageConverterView(FormView):
         convert_to_formats = form.cleaned_data.get('convert_to_formats')
 
         file_instances = []
+        image_names = []
         for image_file, convert_format in zip(images, convert_to_formats):
             if image_file and convert_format:
                 with Image.open(image_file) as img:
@@ -45,15 +48,17 @@ class ImageConverterView(FormView):
                     img_converted.seek(0)
 
                     original_name = os.path.splitext(image_file.name)[0]
-                    unique_name = f"{original_name}_{uuid4().hex[:8]}.{convert_format.lower()}"
+                    unique_name = f"{uuid4()}.{convert_format.lower()}"
 
                     file_instance = File()
                     file_instance.file.save(unique_name, ContentFile(img_converted.read()), save=False)
+
+                    image_names.append(f"{original_name}.{convert_format.lower()}")
                     file_instances.append(file_instance)
 
         File.objects.bulk_create(file_instances)
 
-        converted_image_urls = [file_instance.file.url for file_instance in file_instances]
+        converted_image_urls = [f'{settings.DOWNLOAD_URL}{file_instance.file.url}' for file_instance in file_instances]
         invalid_image_indexes = [i for i in range(len(images)) if i == False]
 
         return JsonResponse(
@@ -62,6 +67,7 @@ class ImageConverterView(FormView):
                 'message': 'Images converted successfully!',
                 'data': {
                     'converted_image_urls': converted_image_urls,
+                    'converted_image_names': image_names,
                     'invalid_image_indexes': invalid_image_indexes
                 }
             }
