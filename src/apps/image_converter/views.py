@@ -41,7 +41,9 @@ class ImageConverterView(FormView):
                     img_format = convert_format.upper()
 
                     if img.mode == 'RGBA' and img_format == 'JPEG':
-                        img = img.convert('RGB')
+                        background = Image.new('RGB', img.size, (255, 255, 255))
+                        background.paste(img, (0, 0), img)
+                        img = background
 
                     img_converted = BytesIO()
                     img.save(img_converted, format=img_format)
