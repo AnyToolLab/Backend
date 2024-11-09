@@ -32,11 +32,14 @@ class ImageConverterView(FormView):
         convert_to_formats = form.cleaned_data.get('convert_to_formats')
 
         file_instances = []
-
         for image_file, convert_format in zip(images, convert_to_formats):
             if image_file and convert_format:
                 with Image.open(image_file) as img:
                     img_format = convert_format.upper()
+
+                    if img.mode == 'RGBA' and img_format == 'JPEG':
+                        img = img.convert('RGB')
+
                     img_converted = BytesIO()
                     img.save(img_converted, format=img_format)
                     img_converted.seek(0)
@@ -45,7 +48,7 @@ class ImageConverterView(FormView):
                     unique_name = f"{original_name}_{uuid4().hex[:8]}.{convert_format.lower()}"
 
                     file_instance = File()
-                    file_instance.file.save(unique_name, ContentFile(img_converted.read()))
+                    file_instance.file.save(unique_name, ContentFile(img_converted.read()), save=False)
                     file_instances.append(file_instance)
 
         File.objects.bulk_create(file_instances)
