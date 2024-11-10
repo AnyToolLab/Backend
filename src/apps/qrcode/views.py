@@ -34,7 +34,12 @@ class QRCodeGenerateView(FormView):
         background_color = form.cleaned_data.get('background_color')
         save_format = form.cleaned_data.get('save_format')
 
-        qrcode = segno.make(content, error='m', version=15)
+        qrcode = segno.make(content, error='m')
+        if qrcode.version <= 10:
+            scale = 8
+        else:
+            scale = 5
+
         qrcode_name = f'{uuid4()}{save_format}'
 
         target_dir = os.path.join(settings.MEDIA_ROOT, 'qrcode/temp')
@@ -47,7 +52,7 @@ class QRCodeGenerateView(FormView):
             artistic_kwargs = {
                 'background': background_img,
                 'target': file_path,
-                'scale': 5,
+                'scale': scale,
                 'dark': color,
                 'data_dark': color,
                 'data_light': background_color,
@@ -59,7 +64,7 @@ class QRCodeGenerateView(FormView):
                 'dark': color,
                 'data_dark': color,
                 'data_light': background_color,
-                'scale': 5,
+                'scale': scale,
             }
             qrcode.to_pil(**pil_kwargs).save(file_path)
 
