@@ -35,7 +35,7 @@ class QRCodeGenerateView(FormView):
         save_format = form.cleaned_data.get('save_format')
 
         qrcode = segno.make(content, error='m')
-        if qrcode.version <= 10:
+        if int(qrcode.version) <= 10:
             scale = 8
         else:
             scale = 5
