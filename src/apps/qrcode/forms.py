@@ -46,6 +46,8 @@ class QRCodeGenerateForm(forms.Form):
 
     def clean_background_img(self):
         image = self.cleaned_data.get("background_img")
+        if not image:
+            return None
         if image.size > self.MAX_BACKGROUND_IMG_SIZE:
             raise forms.ValidationError(f"Max background image size is {self.MAX_BACKGROUND_IMG_SIZE} bytes.")
         return image
