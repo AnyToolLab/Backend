@@ -37,7 +37,12 @@ class QRCodeGenerateView(FormView):
 
         qrcode = segno.make(content, error='m', version=15)
         qrcode_name = f'{uuid4()}{save_format}'
-        file_path = os.path.join(settings.MEDIA_ROOT, 'qrcode/temp', qrcode_name)
+
+        target_dir = os.path.join(settings.MEDIA_ROOT, 'qrcode/temp')
+        os.makedirs(target_dir, exist_ok=True)
+
+        file_path = os.path.join(target_dir, qrcode_name)
+        file_url = f'{settings.MEDIA_URL}qrcode/temp/{qrcode_name}'
 
         if background_img:
             artistic_kwargs = {
@@ -59,18 +64,12 @@ class QRCodeGenerateView(FormView):
             }
             qrcode.to_pil(**pil_kwargs).save(file_path)
 
-        with open(file_path, 'rb') as f:
-            django_file = DjangoFile(f)
-            file_instance = File.objects.create(file=django_file)
-
-        os.remove(file_path)
-
         return JsonResponse(
             {
                 'status': 'success',
                 'message': 'QRCode successfully generated!',
                 'data': {
-                    'url': f'{settings.DOWNLOAD_URL}{file_instance.file.url}',
+                    'url': f'{settings.DOWNLOAD_URL}{file_url}',
                     'filename': f'qrcode{save_format}'
                 }
             }
