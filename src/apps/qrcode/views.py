@@ -61,9 +61,6 @@ class QRCodeGenerateView(FormView):
 
         else:
             pil_kwargs = {
-                'dark': color,
-                'data_dark': color,
-                'data_light': background_color,
                 'scale': scale,
             }
 
