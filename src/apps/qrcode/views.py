@@ -37,7 +37,7 @@ class QRCodeGenerateView(FormView):
 
         qrcode = segno.make(content, error='m', version=15)
         qrcode_name = f'{uuid4()}{save_format}'
-        file_path = os.path.join(settings.MEDIA_ROOT, 'qrcode_temp', qrcode_name)
+        file_path = os.path.join(settings.MEDIA_ROOT, 'qrcode/temp', qrcode_name)
 
         if background_img:
             artistic_kwargs = {
@@ -70,7 +70,7 @@ class QRCodeGenerateView(FormView):
                 'status': 'success',
                 'message': 'QRCode successfully generated!',
                 'data': {
-                    'url': file_instance.file.url,
+                    'url': f'{settings.DOWNLOAD_URL}{file_instance.file.url}',
                     'filename': f'qrcode{save_format}'
                 }
             }
