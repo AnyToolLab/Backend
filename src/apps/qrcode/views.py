@@ -49,10 +49,14 @@ class QRCodeGenerateView(FormView):
                 'background': background_img,
                 'target': file_path,
                 'scale': scale,
-                'dark': color,
-                'data_dark': color,
-                'data_light': background_color,
             }
+
+            if color:
+                artistic_kwargs['dark'] = color
+                artistic_kwargs['data_dark'] = color
+            if background_color:
+                artistic_kwargs['data_light'] = background_color
+
             qrcode.to_artistic(**artistic_kwargs)
 
         else:
@@ -62,6 +66,13 @@ class QRCodeGenerateView(FormView):
                 'data_light': background_color,
                 'scale': scale,
             }
+
+            if color:
+                pil_kwargs['dark'] = color
+                pil_kwargs['data_dark'] = color
+            if background_color:
+                pil_kwargs['data_light'] = background_color
+
             qrcode.to_pil(**pil_kwargs).save(file_path)
 
         return JsonResponse(
