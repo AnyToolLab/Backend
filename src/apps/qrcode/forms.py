@@ -1,6 +1,7 @@
 from django import forms
 import re
 
+
 class QRCodeGenerateForm(forms.Form):
     SAVE_FORMATS = ['.png', '.jpg', '.svg', '.gif']
     MAX_BACKGROUND_IMG_SIZE = 5 * 1024 * 1024  # 10 MB
@@ -47,25 +48,28 @@ class QRCodeGenerateForm(forms.Form):
         color = self.cleaned_data.get('color')
         hex_color_pattern = r'^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$'  # Matches #RGB or #RRGGBB
 
-        if not re.match(hex_color_pattern, color):
-            raise forms.ValidationError('Invalid color format. Use hex format (e.g., #FFFFFF or #FFF).')
+        if color:
+            if not re.match(hex_color_pattern, color):
+                raise forms.ValidationError('Invalid color format. Use hex format (e.g., #FFFFFF or #FFF).')
 
         return color
 
     def clean_background_color(self):
         background_color = self.cleaned_data.get('background_color')
         hex_color_pattern = r'^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$'
-        if not re.match(hex_color_pattern, background_color):
-            raise forms.ValidationError('Invalid background_color format. Use hex format (e.g., #FFFFFF or #FFF).')
+
+        if background_color:
+            if not re.match(hex_color_pattern, background_color):
+                raise forms.ValidationError('Invalid background_color format. Use hex format (e.g., #FFFFFF or #FFF).')
 
         return background_color
 
     def clean_background_img(self):
         image = self.cleaned_data.get("background_img")
-        if not image:
-            return None
-        if image.size > self.MAX_BACKGROUND_IMG_SIZE:
-            raise forms.ValidationError(f"Max background image size is {self.MAX_BACKGROUND_IMG_SIZE} bytes.")
+
+        if image:
+            if image.size > self.MAX_BACKGROUND_IMG_SIZE:
+                raise forms.ValidationError(f"Max background image size is {self.MAX_BACKGROUND_IMG_SIZE} bytes.")
         return image
 
     def clean_save_format(self):
