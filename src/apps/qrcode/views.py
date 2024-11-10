@@ -35,13 +35,7 @@ class QRCodeGenerateView(FormView):
         save_format = form.cleaned_data.get('save_format')
 
         qrcode = segno.make(content, error='m')
-        if isinstance(qrcode.version, int) and qrcode.version <= 10:
-            scale = 8
-        elif isinstance(qrcode.version, int) or qrcode.version in ['M1', 'M2', 'M3', 'M4']:
-            scale = 5
-        else:
-            scale = 5
-
+        scale = 10
         qrcode_name = f'{uuid4()}{save_format}'
 
         target_dir = os.path.join(settings.MEDIA_ROOT, 'qrcode/temp')
