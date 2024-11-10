@@ -6,7 +6,6 @@ import segno
 from django.http import JsonResponse
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
-from django.core.files import File as DjangoFile
 from django.views.generic import FormView
 
 from config import settings
@@ -69,7 +68,7 @@ class QRCodeGenerateView(FormView):
                 'status': 'success',
                 'message': 'QRCode successfully generated!',
                 'data': {
-                    'url': f'{settings.DOWNLOAD_URL}{file_url}',
+                    'url': f'{file_url}',
                     'filename': f'qrcode{save_format}'
                 }
             }
