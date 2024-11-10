@@ -34,7 +34,7 @@ class QRCodeGenerateView(FormView):
         background_color = form.cleaned_data.get('background_color')
         save_format = form.cleaned_data.get('save_format')
 
-        qrcode = segno.make(content, error='m')
+        qrcode = segno.make(content, error='m', micro=False)
         scale = 20
         qrcode_name = f'{uuid4()}{save_format}'
 
