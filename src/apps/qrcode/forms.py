@@ -26,6 +26,14 @@ class QRCodeGenerateForm(forms.Form):
         required=False,
     )
 
+    background_color = forms.CharField(
+        max_length=7,
+        required=False,
+        error_messages={
+            'max_length': 'background_color must be in hex format (e.g., #FFFFFF).'
+        }
+    )
+
     save_format = forms.CharField(
         max_length=7,
         required=True,
@@ -43,6 +51,14 @@ class QRCodeGenerateForm(forms.Form):
             raise forms.ValidationError('Invalid color format. Use hex format (e.g., #FFFFFF or #FFF).')
 
         return color
+
+    def clean_background_color(self):
+        background_color = self.cleaned_data.get('background_color')
+        hex_color_pattern = r'^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$'
+        if not re.match(hex_color_pattern, background_color):
+            raise forms.ValidationError('Invalid background_color format. Use hex format (e.g., #FFFFFF or #FFF).')
+
+        return background_color
 
     def clean_background_img(self):
         image = self.cleaned_data.get("background_img")

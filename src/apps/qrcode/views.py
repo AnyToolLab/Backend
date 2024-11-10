@@ -32,24 +32,32 @@ class QRCodeGenerateView(FormView):
         content = form.cleaned_data.get('content')
         color = form.cleaned_data.get('color')
         background_img = form.cleaned_data.get('background_img')
+        background_color = form.cleaned_data.get('background_color')
         save_format = form.cleaned_data.get('save_format')
 
         qrcode = segno.make(content, error='m', version=15)
         qrcode_name = f'{uuid4()}{save_format}'
         file_path = os.path.join(settings.MEDIA_ROOT, 'qrcode', qrcode_name)
 
-        artistic_kwargs = {
-            'target': file_path,
-            'scale': 5,
-            'dark': color,
-            'data_light': color,
-            'data_dark': color
-        }
+        if background_img:
+            artistic_kwargs = {
+                'background': background_img,
+                'target': file_path,
+                'scale': 5,
+                'dark': color,
+                'data_dark': color,
+                'data_light': background_color,
+            }
+            qrcode.to_artistic(**artistic_kwargs)
 
-        if background_img is not None:
-            artistic_kwargs['background'] = background_img
-
-        qrcode.to_artistic(**artistic_kwargs)
+        else:
+            pil_kwargs = {
+                'dark': color,
+                'data_dark': color,
+                'data_light': background_color,
+                'scale': 5,
+            }
+            qrcode.to_pil(**pil_kwargs).save(file_path)
 
         with open(file_path, 'rb') as f:
             django_file = DjangoFile(f)
