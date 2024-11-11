@@ -65,7 +65,7 @@ class GenerateFakeDataView(FormView):
                 'message': 'Fake data generated successfully!',
                 'data': {
                     'url': file_instance.file.url,
-                    'filename': filename,
+                    'filename': f'fake-data.{save_format}',
                 }
             }
         )
