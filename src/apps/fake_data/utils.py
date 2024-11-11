@@ -11,80 +11,83 @@ Default localization US english, ie: en_US
 
 FAKE_DATA = {
     # Person
-    'name_name_male': faker.name_male,
-    'name_name_female': faker.name_female,
+    'first_name': faker.first_name,
+    'last_name': faker.last_name,
+    'name': faker.name,
+    'name_male': faker.name_male,
+    'name_female': faker.name_female,
 
     # Lorem
     'text': faker.text,
 
     # Address
-    'address_address': faker.address,
-    'address_building_number': faker.building_number,
-    'address_city': faker.city,
-    'address_country': faker.country,
-    'address_country_code': faker.country_code,
-    'address_postcode': faker.postcode,
-    'address_street_address': faker.street_address,
-    'address_street_name': faker.street_name,
+    'address': faker.address,
+    'building_number': faker.building_number,
+    'city': faker.city,
+    'country': faker.country,
+    'country_code': faker.country_code,
+    'postcode': faker.postcode,
+    'street_address': faker.street_address,
+    'street_name': faker.street_name,
 
     # Automotive
-    'automotive_license_plate': faker.license_plate,
-    'automotive_vin': faker.vin,
+    'license_plate': faker.license_plate,
+    'vin': faker.vin,
 
     # Bank
-    'bank_aba': faker.aba,
-    'bank_bank_country': faker.bank_country,
-    'bank_bban': faker.bban,
-    'bank_iban': faker.iban,
-    'bank_swift': faker.swift,
+    'aba': faker.aba,
+    'bank_country': faker.bank_country,
+    'bban': faker.bban,
+    'iban': faker.iban,
+    'swift': faker.swift,
 
     # Barcode
-    'barcode_ean': faker.ean,
+    'ean': faker.ean,
 
     # Color
-    'color_color_name': faker.color_name,
-    'color_hex_color': faker.hex_color,
-    'color_rgb_color': faker.rgb_color,
+    'color_name': faker.color_name,
+    'hex_color': faker.hex_color,
+    'rgb_color': faker.rgb_color,
 
     # Company
-    'company_company': faker.company,
-    'company_bs': faker.bs,
-    'company_catch_phrase': faker.catch_phrase,
-    'company_company_suffix': faker.company_suffix,
+    'company': faker.company,
+    'bs': faker.bs,
+    'catch_phrase': faker.catch_phrase,
+    'company_suffix': faker.company_suffix,
 
     # Credit Card
-    'credit_card_credit_card_full': faker.credit_card_full,
-    'credit_card_credit_card_expire': faker.credit_card_expire,
-    'credit_card_credit_card_number': faker.credit_card_number,
-    'credit_card_credit_card_provider': faker.credit_card_provider,
-    'credit_card_credit_card_security_code': faker.credit_card_security_code,
+    'credit_card_full': faker.credit_card_full,
+    'credit_card_expire': faker.credit_card_expire,
+    'credit_card_number': faker.credit_card_number,
+    'credit_card_provider': faker.credit_card_provider,
+    'credit_card_security_code': faker.credit_card_security_code,
 
     # Date Time
-    'date_time_date': faker.date,
+    'date': faker.date,
 
     # Geo
-    'geo_location_on_land': faker.location_on_land,
+    'location_on_land': faker.location_on_land,
 
     # Internet
-    'internet_company_email': faker.ascii_company_email,
-    'internet_email': faker.ascii_free_email,
-    'internet_domain_name': faker.domain_name,
-    'internet_hostname': faker.hostname,
-    'internet_ipv4': faker.ipv4,
-    'internet_ipv6': faker.ipv6,
-    'internet_mac_address': faker.mac_address,
-    'internet_port_name': faker.port_number,
-    'internet_slug': faker.slug,
-    'internet_uri': faker.uri,
-    'internet_url': faker.url,
-    'internet_user_name': faker.user_name,
+    'company_email': faker.ascii_company_email,
+    'email': faker.ascii_free_email,
+    'domain_name': faker.domain_name,
+    'hostname': faker.hostname,
+    'ipv4': faker.ipv4,
+    'ipv6': faker.ipv6,
+    'mac_address': faker.mac_address,
+    'port_number': faker.port_number,
+    'slug': faker.slug,
+    'uri': faker.uri,
+    'url': faker.url,
+    'user_name': faker.user_name,
 
     # Job
-    'job_job': faker.job,
+    'job': faker.job,
 
     # Phone Number
-    'phone_number_phone_number': faker.phone_number,
+    'phone_number': faker.phone_number,
 
     # User Agent
-    'user_agent_user_agent': faker.user_agent,
+    'user_agent': faker.user_agent,
 }
