@@ -1,6 +1,7 @@
 import json
 import csv
 import uuid
+import xml.etree.ElementTree as ET
 from io import BytesIO, StringIO
 
 from dict2xml import dict2xml
@@ -41,7 +42,13 @@ class GenerateFakeDataView(FormView):
         file_data = ''
 
         if save_format == 'xml':
-            file_data = dict2xml(generated_fake_data)
+            root = ET.Element("data")
+            for key, values in generated_fake_data.items():
+                for value in values:
+                    item_element = ET.SubElement(root, key)
+                    item_element.text = str(value)
+            file_data = ET.tostring(root, encoding="unicode")
+
         elif save_format == 'json':
             file_data = json.dumps(generated_fake_data)
         elif save_format == 'csv':
