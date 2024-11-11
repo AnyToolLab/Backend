@@ -49,7 +49,8 @@ class GenerateFakeDataView(FormView):
             field_names = list(generated_fake_data.keys())
             writer = csv.DictWriter(file_data, fieldnames=field_names)
             writer.writeheader()
-            writer.writerows(generated_fake_data)
+            rows = [dict(zip(field_names, values)) for values in zip(*generated_fake_data.values())]
+            writer.writerows(rows)
 
             file_data.seek(0)
             file_data = file_data.getvalue()
