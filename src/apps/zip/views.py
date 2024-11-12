@@ -37,8 +37,8 @@ class CreateZipView(FormView):
                 'status': 'success',
                 'message': 'Zip file successfully created!',
                 'data': {
-                    'url': f'{settings.MEDIA_URL}{settings.ZIP_FILES_MEDIA_DIR}/{filename}',
-                    'filename': 'archive.zip'
+                    'file_url': f'{settings.MEDIA_URL}{settings.ZIP_FILES_MEDIA_DIR}/{filename}',
+                    'file_name': 'archive.zip'
                 }
             }
         )
