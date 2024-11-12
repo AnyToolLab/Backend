@@ -60,7 +60,7 @@ class ImageConverterView(FormView):
 
         File.objects.bulk_create(file_instances)
 
-        converted_image_urls = [f'{settings.DOWNLOAD_URL}{file_instance.file.url}' for file_instance in file_instances]
+        converted_image_urls = [f'{file_instance.file.url}' for file_instance in file_instances]
         invalid_image_indexes = [i for i in range(len(images)) if i == False]
 
         return JsonResponse(
