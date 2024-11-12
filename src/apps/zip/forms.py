@@ -1,7 +1,5 @@
 import zipfile
 
-from PIL import Image
-
 from django import forms
 
 
@@ -10,8 +8,8 @@ class MultipleFileInput(forms.ClearableFileInput):
 
 
 class MultipleFileField(forms.FileField):
-    MAX_FILE_SIZE_MB = 100
-    MAX_FILE_SIZE = MAX_FILE_SIZE_MB * 1024 * 1024
+    MAX_FILES_SIZE_MB = 1024
+    MAX_FILES_SIZE = MAX_FILES_SIZE_MB * 1024 * 1024
     MAX_UPLOADS = 20
 
     def __init__(self, *args, **kwargs):
@@ -20,25 +18,37 @@ class MultipleFileField(forms.FileField):
 
     def clean(self, data, initial=None):
         single_file_clean = super().clean
+        total_size = 0
+
         if isinstance(data, (list, tuple)):
             if len(data) > self.MAX_UPLOADS:
-                raise forms.ValidationError(f"The maximum number of files to create a zip archive is {self.MAX_UPLOADS}")
+                raise forms.ValidationError(
+                    f"The maximum number of files to create a zip archive is {self.MAX_UPLOADS}")
+
             result = []
             for file_data in data:
                 file = single_file_clean(file_data, initial)
-                is_valid = self.validate_image(file)
+                total_size += file.size
+
+                if total_size > self.MAX_FILES_SIZE:
+                    raise forms.ValidationError(
+                        f"The total size of uploaded files exceeds the maximum limit of {self.MAX_FILES_SIZE_MB}MB")
+
+                is_valid = self.validate_file(file)
                 if is_valid:
                     result.append(file)
                 else:
                     result.append(False)
         else:
             result = single_file_clean(data, initial)
-            result = [result] if self.validate_image(result) else [False]
+            result = [result] if self.validate_file(result) else [False]
+
         return result
 
     def validate_file(self, file):
-        if file.size > self.MAX_FILE_SIZE:
-            raise forms.ValidationError(f"The size of the file exceeds the maximum file size limit of {self.MAX_FILE_SIZE_MB}MB")
+        if file.size > self.MAX_FILES_SIZE:
+            raise forms.ValidationError(
+                f"The size of the file exceeds the maximum file size limit of {self.MAX_FILES_SIZE_MB}MB")
         return True
 
 

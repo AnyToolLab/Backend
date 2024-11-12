@@ -1,3 +1,4 @@
+import os
 import uuid
 import zipfile
 
@@ -28,6 +29,8 @@ class CreateZipView(FormView):
 
         filename = f'{uuid.uuid4()}.zip'
         file_path = f'{settings.MEDIA_ROOT}{settings.ZIP_FILES_MEDIA_DIR}/{filename}'
+        file_dir = os.path.dirname(file_path)
+        os.makedirs(file_dir, exist_ok=True)
         with zipfile.ZipFile(file_path, "w", zipfile.ZIP_DEFLATED) as zip_file:
             for uploaded_file in files:
                 zip_file.writestr(uploaded_file.name, uploaded_file.read())
@@ -71,6 +74,7 @@ class ExtractZipView(FormView):
 
         files_dir_name = uuid.uuid4()
         files_dir = f'{settings.MEDIA_ROOT}{settings.ZIP_FILES_MEDIA_DIR}/{files_dir_name}/'
+        os.makedirs(files_dir, exist_ok=True)
         with zipfile.ZipFile(zip_file, 'r') as myzip:
             myzip.extractall(files_dir)
 
@@ -79,8 +83,12 @@ class ExtractZipView(FormView):
                 'status': 'success',
                 'message': 'Zip file extracted successfully!',
                 'data': {
-                    'url_dir': f'{settings.MEDIA_URL}{settings.ZIP_FILES_MEDIA_DIR}/{files_dir_name}/',
-                    'filename': None
+                    'files': [{
+                        'file_url': f'{settings.MEDIA_URL}{settings.ZIP_FILES_MEDIA_DIR}/{files_dir_name}/{file}',
+                        'file_name': file,
+                        'file_size': os.path.getsize(os.path.join(files_dir, file))
+                    } for file in os.listdir(files_dir)],
+                    'filе_name': zip_file.name,
                 }
             }
         )
