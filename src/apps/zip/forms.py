@@ -10,9 +10,9 @@ class MultipleFileInput(forms.ClearableFileInput):
 
 
 class MultipleFileField(forms.FileField):
-    MAX_FILE_SIZE_MB = 10
+    MAX_FILE_SIZE_MB = 100
     MAX_FILE_SIZE = MAX_FILE_SIZE_MB * 1024 * 1024
-    MAX_UPLOADS = 10
+    MAX_UPLOADS = 20
 
     def __init__(self, *args, **kwargs):
         kwargs.setdefault("widget", MultipleFileInput())
@@ -38,7 +38,7 @@ class MultipleFileField(forms.FileField):
 
     def validate_file(self, file):
         if file.size > self.MAX_FILE_SIZE:
-            raise forms.ValidationError(f"The size of the file test.txt exceeds the maximum file size limit of {self.MAX_FILE_SIZE_MB}MB")
+            raise forms.ValidationError(f"The size of the file exceeds the maximum file size limit of {self.MAX_FILE_SIZE_MB}MB")
         return True
 
 
@@ -47,7 +47,7 @@ class CreateZipForm(forms.Form):
 
 
 class ExtractZipForm(forms.Form):
-    MAX_FILE_SIZE_MB = 10
+    MAX_FILE_SIZE_MB = 100
     MAX_FILE_SIZE = MAX_FILE_SIZE_MB * 1024 * 1024
 
     file = forms.FileField(required=True)
