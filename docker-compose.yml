@@ -1,0 +1,26 @@
+services:
+  app:
+    build: .
+    container_name: app
+    volumes:
+      - .:/app
+      - ./src/media:/app/src/media
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    env_file:
+      - .env
+    restart: always
+
+  db:
+    image: postgres:17.0-alpine3.20
+    container_name: postgres_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    env_file:
+      - .env
+    restart: always
+
+volumes:
+  postgres_data:

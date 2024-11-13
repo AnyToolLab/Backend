@@ -11,6 +11,9 @@ django-cors-headers = "*"
 pillow = "*"
 faker = "*"
 dict2xml = "*"
+gunicorn = "*"
+python-dotenv = "*"
+psycopg2-binary = "*"
 
 [dev-packages]
 
